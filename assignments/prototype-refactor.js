@@ -8,42 +8,49 @@ Prototype Refactor
 
 */
 
-// Test you work by un-commenting these 3 objects and the list of console logs below:
-//GAMEOBJECT CONSTRUCTOR'S TERRITORY
-function GameObject(gobj) {
-    this.createdAt = gobj.createdAt;
-    this.name = gobj.name;
-    this.dimensions = gobj.dimensions;
-  }
-  GameObject.prototype.destroy = function() {
-    return `${this.name} was removed from the game.`;
-  }
+    //GAMEOBJECT CONSTRUCTOR'S TERRITORY
+    class GameObject {
+        constructor(gobj) {
+            this.createdAt = gobj.createdAt;
+            this.name = gobj.name;
+            this.dimensions = gobj.dimensions;
+        }
+
+        destroy() {
+            return `${this.name} was removed from the game.`;
+        }
+    }
+    
+    
+    //CHARACTERSTATS CONSTRUCTOR'S TERRITORY
+    class CharacterStats extends GameObject {
+        constructor(cobj) {
+            super(cobj);
+            this.healthPoints = cobj.healthPoints;
+        }
+
+        takeDamage() {
+            return `${this.name} took damage.`;
+        }
+    }
+    
+    
+    //HUMANOID CONSTRUCTOR'S TERRITORY
+    class Humanoid extends CharacterStats{
+        constructor(hobj) {
+            super(hobj);
+            this.team = hobj.team;
+            this.weapons = hobj.weapons;
+            this.language = hobj.language;
+        }
+
+        greet() {
+            return `${this.name} offers a greeting in ${this.language}.`
+        }
+    }
   
-  //CHARACTERSTATS CONSTRUCTOR'S TERRITORY
-  function CharacterStats(cobj) {
-    this.healthPoints = cobj.healthPoints;
-    GameObject.call(this, cobj);
-  }
   
-  CharacterStats.prototype = Object.create(GameObject.prototype);
-  
-  CharacterStats.prototype.takeDamage = function() {
-    return `${this.name} took damage.`;
-  }
-  
-  //HUMANOID CONSTRUCTOR'S TERRITORY
-  function Humanoid(hobj) {
-    this.team = hobj.team;
-    this.weapons = hobj.weapons;
-    this.language = hobj.language;
-    CharacterStats.call(this, hobj);
-  }
-  
-  Humanoid.prototype = Object.create(CharacterStats.prototype);
-  
-  Humanoid.prototype.greet = function() {
-    return `${this.name} offers a greeting in ${this.language}.`
-  }
+
   
   
     const mage = new Humanoid({
@@ -114,15 +121,19 @@ function GameObject(gobj) {
     // * Create two new objects, one a villain and one a hero and fight it out with methods!
   
     //CONSTRUCTOR FUNCTIONS FOR STRETCH PROBLEMS
-    function Villain(vobj) {
-      Humanoid.call(this, vobj);
-      this.thunderBolt = vobj.thunderBolt;
+    class Villain extends Humanoid {
+        constructor(vobj) {
+            super(vobj);
+            this.thunderBolt = vobj.thunderBolt;
+        }
     }
   
-    function Hero(hobj) {
-      Humanoid.call(this, hobj);
-      this.ironFist = hobj.ironFist;
-      this.finishingMove = hobj.finishingMove;
+    class Hero extends Humanoid {
+        constructor(hobj) {
+            super(hobj)
+            this.ironFist = hobj.ironFist;
+            this.finishingMove = hobj.finishingMove;
+        }
     }
   
     //VILLAIN AND HERO OBJECTS FOR STRETCH PROBLEMS
