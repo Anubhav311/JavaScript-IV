@@ -31,7 +31,7 @@ class Instructor extends Person {
     }
 
     studentsGrading(student) {
-        let varb = Math.floor(Math.random() * Math.floor(10));
+        let varb = Math.floor(Math.random() * 10);
         if(varb % 2 === 0) {
             student.grade += varb;
         } else {
@@ -158,7 +158,7 @@ const lidiia = new ProjectManager({
     name: "Lidiia Gallagher",
     age: 25,
     location: "USA",
-    gender: "M",
+    gender: "F",
     specialty: "Memes",
     favLanguage: "English",
     catchPhrase: "Please submit your Airtable",
